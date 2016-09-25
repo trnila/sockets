@@ -3,11 +3,11 @@ watch=$1
 action=$2
 
 
-$action &
+eval $action &
 pid=$!
 inotifywait -q -m -e close_write "$watch" | while read line; do
 	echo "-- Restarting --"
 	kill $pid
-	$action &
+	eval $action &
 	pid=$!
 done
