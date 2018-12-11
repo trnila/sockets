@@ -28,20 +28,20 @@ int main() {
    struct sockaddr_in addr;
    memset(&addr, 0, sizeof(addr));
    addr.sin_family = AF_INET;
-   addr.sin_addr.s_addr = INADDR_BROADCAST;
+   addr.sin_addr.s_addr = inet_addr("192.168.99.255");
    addr.sin_port = htons(PORT);
    socklen_t addrlen = sizeof(addr);
 
    int i = 0;
    for(;;) {
-      char buf[32];
+      char buf[1024];
       snprintf(buf, sizeof(buf), "Hello %d", i++);
-      int r = sendto(sock, buf, strlen(buf), 0, (struct sockaddr *) &addr, addrlen);
+      int r = sendto(sock, buf, 1024/4, 0, (struct sockaddr *) &addr, addrlen);
       if (r <= 0) {
 	 perror("sendto");
 	 exit(1);
       }
-      sleep(1);
+      usleep(2000/4);
    }
 
    return 0;

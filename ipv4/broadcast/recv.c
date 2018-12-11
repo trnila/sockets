@@ -37,7 +37,7 @@ int main() {
 
    int i = 0;
    for(;;) {
-      char buf[32];
+      char buf[1024];
       int r = recvfrom(sock, buf, sizeof(buf), 0, (struct sockaddr *) &addr, &addrlen);
       if (r <= 0) {
 	 perror("recvfrom");
